@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="This is a simple temperature converter">
+	<meta name="keywords" content="Celsius, Fahrenheit, Temperature">
+
+	<title>Temperature Converter</title>
+
+	<!-- external CSS link -->
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<main>
+		<div class="container">
+			<h1>This is a simple temperature converter</h1>
+
+			<h3>Convert Degree Celsius to Fahrenheit</h3>
+			<form>
+				<label for="celsiusToF">Celsius (&#8451;) : </label>
+				<input id="celsius" type="number" placeholder="Celsius here">
+				<input id="submitC" type="submit" value="Submit">
+			</form>
+
+			<h3>Convert Fahrenheit to Degree Celsius</h3>
+			<form>
+				<label for="fToCelsius">Fahrenheit (&#8457;) : </label>
+				<input id="fahrenheit" type="number" placeholder="Fahrenheit here">
+				<input id="submitF" type="submit" value="Submit">
+			</form>
+
+			<h3 id="result"></h3>
+		</div>
+	</main>
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
