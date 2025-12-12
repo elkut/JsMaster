@@ -9,56 +9,62 @@ let operator = '';
 //console.log(btns)
 
 userInput.addEventListener('input', (e) => {
-    inputValue = e.target.value;
+    e.preventDefault();
+    inputValue = e.target.value.trim();
 })
 
 btns.forEach(btn => {
     btn.addEventListener("click", (e) => {
+        if (inputValue !== '') {
+            inputValue = inputValue.replaceAll(/[a-z]/ig, "")
+        }
+
         switch (e.target.innerHTML) {
             case '+':
-                num += parseInt(inputValue);
+                num += Number(inputValue);
                 userInput.value = '';
                 operator = '+'
-                //console.log(num, inputValue)
                 break;
             case '=':
                 displayResult(operator);
                 break;
             case '-':
-                num = parseInt(inputValue);
+                num = Number(inputValue);
                 userInput.value = '';
                 operator = '-'
                 break;
             case '/':
-                num = parseInt(inputValue);
+                num = Number(inputValue);
                 userInput.value = '';
                 operator = '/'
                 break;
             case 'x':
-                num = parseInt(inputValue);
+                num = Number(inputValue);
                 userInput.value = '';
                 operator = 'x'
                 break;
             default:
                 userInput.value += String(e.target.innerHTML)
-                inputValue = parseInt(userInput.value)
+                inputValue = userInput.value
         }
     })
 })
 
 function displayResult(type) {
+
+
     //console.log(num)
     if (type === '+') {
-        userInput.value = num + parseInt(inputValue)
+        userInput.value = num + Number(inputValue)
     }
     if (type === '-') {
-        userInput.value = num - parseInt(inputValue)
+        userInput.value = num - Number(inputValue)
     }
     if (type === '/') {
-        userInput.value = num / parseInt(inputValue)
+        userInput.value = num / Number(inputValue)
     }
     if (type === 'x') {
-        userInput.value = num * parseInt(inputValue)
+        userInput.value = num * Number(inputValue)
     }
 
     //keep the current result
