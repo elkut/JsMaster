@@ -74,8 +74,15 @@ input::-webkit-inner-spin-button {
   gap: 0.75rem;
 }
 
+.calc-clear {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
 /* Button base */
-.calc-buttons button {
+button {
   display: flex;
   justify-content: center;
   align-items: center;

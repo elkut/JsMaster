@@ -1,73 +1,105 @@
 const userInput = document.querySelector('input')
 const btns = Array.from(document.querySelectorAll('button'))
 
-let inputValue = '';
-let result = 0;
 let num = 0;
 let operator = '';
-
-//console.log(btns)
-
-userInput.addEventListener('input', (e) => {
-    e.preventDefault();
-    inputValue = e.target.value.trim();
-})
+let isNewEntry = false;
 
 btns.forEach(btn => {
     btn.addEventListener("click", (e) => {
-        if (inputValue !== '') {
-            inputValue = inputValue.replaceAll(/[a-z]/ig, "")
+        const key = e.target.textContent;
+
+        const actionId = e.target.id
+
+        if (actionId === 'clear') {
+            resetAll()
+            return;
+        }
+        else if (actionId === 'remove' && isNewEntry) {
+            if (userInput.value !== '') {
+                userInput.value = removeLastChar(userInput.value)
+            }
+            return;
         }
 
-        switch (e.target.innerHTML) {
+        switch (key) {
             case '+':
-                num += Number(inputValue);
-                userInput.value = '';
-                operator = '+'
+                handleOperator(operator, '+')
                 break;
             case '=':
                 displayResult(operator);
+                operator = '';
                 break;
             case '-':
-                num = Number(inputValue);
-                userInput.value = '';
-                operator = '-'
+                handleOperator(operator, '-')
                 break;
             case '/':
-                num = Number(inputValue);
-                userInput.value = '';
-                operator = '/'
+                handleOperator(operator, '/')
                 break;
             case 'x':
-                num = Number(inputValue);
-                userInput.value = '';
-                operator = 'x'
+                handleOperator(operator, 'x')
                 break;
             default:
-                userInput.value += String(e.target.innerHTML)
-                inputValue = userInput.value
-        }
-    })
-})
+                if (isNewEntry) {
+                    userInput.value = ''
+                    isNewEntry = false
+                }
+
+                if (String(key) === '.' && userInput.value.includes('.')) {
+                    break;
+                }
+
+                userInput.value += String(key)
+        } // switch end
+    }) // addEventListener end
+}) // forEach end
 
 function displayResult(type) {
-
-
-    //console.log(num)
+    const current = Number(userInput.value);
     if (type === '+') {
-        userInput.value = num + Number(inputValue)
+        userInput.value = num + current
     }
-    if (type === '-') {
-        userInput.value = num - Number(inputValue)
+    else if (type === '-') {
+        userInput.value = num - current;
     }
-    if (type === '/') {
-        userInput.value = num / Number(inputValue)
+    else if (type === '/') {
+        current === 0
+            ? userInput.value = 'EEOR'
+            : userInput.value = num / current;
     }
-    if (type === 'x') {
-        userInput.value = num * Number(inputValue)
+    else if (type === 'x') {
+        userInput.value = num * current;
     }
 
-    //keep the current result
-    inputValue = userInput.value
-    num = 0;
+
+    if (userInput.value !== 'EEOR')
+        num = Number(userInput.value)
+
+    isNewEntry = true
+}
+
+
+
+function handleOperator(op, type) {
+    const current = userInput.value === '' ? 0 : Number(userInput.value)
+
+    if (op === '') {
+        num = current;
+    }
+    else if (!isNewEntry) {
+        displayResult(op)
+    }
+    operator = type
+    isNewEntry = true
+}
+
+function resetAll() {
+    operator = '';
+    userInput.value = '';
+    num = 0
+    isNewEntry = true
+}
+
+function removeLastChar(input) {
+    return input.slice(0, -1)
 }
